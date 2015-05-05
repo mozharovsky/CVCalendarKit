@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:CVCalendarKitDemo.xcodeproj">
+      location = "group:../../Desktop/CVCalendarKitDemo.playground">
    </FileRef>
 </Workspace>

@@ -2,6 +2,7 @@
 
 import UIKit
 
+/// Current date.
 let today = NSDate()
 
 /// Day operations.
@@ -20,30 +21,30 @@ let yearAgo = today.year - 1
 let multipliedDate = today.day * 5
 let dividedDate = today.month / 5
 
-/// Trailing operations. 
+/// Trailing operations.
 let dayAheadMonthAgo = (today.day + 1).month - 1
-let yearAheadTwoMonthsAgoFiveDaysAhead = ((today.year + 1).month - 1).day + 5
+let yearAheadTwoMonthsAgoFiveDaysAhead = ((today.year + 1).month - 2).day + 5
 
-/// NSDate comparison. 
+/// NSDate comparison.
 today == yesterday
 today > yesterday
 yesterday <= tomorrow
 tomorrow != today
 
-/// Convenience stuff. 
+/// Convenience stuff.
 let firstDateInCurrentMonth = today.firstMonthDate()
 let lastDateInCurrentMonth = today.lastMonthDate()
 let firstDateInCurrentYear = today.firstYearDate()
 let lastDateInCurrentYear = today.lastYearDate()
 
-/// Date construction by assigning values. 
+/// Date construction by assigning values.
 let customDate = ((today.day == 21).month == 5).year == 1997
 
-/// Date unit values (year, month, day). 
+/// Date unit values (year, month, day).
 let todaysYear = today.year.value()
 let todaysMonth = today.month.value()
 let todaysDay = today.day.value()
 
 /// NSDate+Weekday.
-let todaysWeekday = today.weekday // Enum value. 
+let todaysWeekday = today.weekday // Enum value.
 let todaysWeekdayRaw = today.weekday.rawValue // Raw value.

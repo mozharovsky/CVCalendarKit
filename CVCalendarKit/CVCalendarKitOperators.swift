@@ -23,7 +23,7 @@ public enum DateUnit {
     /**
     :returns: An associated value with a particular case.
     */
-    func value() -> Int {
+    public func value() -> Int {
         switch self {
         case .Year(_, let x): return x
         case .Month(_, let x): return x
