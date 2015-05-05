@@ -1,5 +1,7 @@
-# CVCalendarKit
-A wrapper around NSDate which provides a convenience way for dealing with dates through overloaded operators and extensions.
+
+![](https://raw.githubusercontent.com/Mozharovsky/CVCalendarKit/9364bf1f7b7f70a632f5b57e2bbb7b9f85500109/Assets/CVCalendarKit.png)
+
+CVCalendarKit is a wrapper around NSDate which provides a convenience way for dealing with dates through overloaded operators and extensions.
 
 ## Features
 
