@@ -71,10 +71,10 @@ You can get really difficult calculations with trailing.
 ```swift
 /// Trailing operations. 
 let dayAheadMonthAgo = (today.day + 1).month - 1
-let yearAheadTwoMonthsAgoFiveDaysAhead = ((today.year + 1).month - 1).day + 5
+let yearAheadTwoMonthsAgoFiveDaysAhead = ((today.year + 1).month - 2).day + 5
 ```
 
-Do you need to compare NSDate instances? Here you go!
+Do you need to compare <b>NSDate</b> instances? Here you go!
 ```swift
 /// NSDate comparison. 
 today == yesterday
