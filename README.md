@@ -12,6 +12,7 @@ Currently available features.
 * NSDate comparison 
 * NSDate convenience stuff 
 * Date construction with custom values 
+* Date construction with String 
 * Date unit values 
 * Weekdays 
 
@@ -38,7 +39,7 @@ pod 'CVCalendarKit', '~> 0.1.1'
 Download CVCalendarKit project source code and add <b>CVCalendarKit</b> folder into your target (copy if needed).
 ## Usage 
 
-Using <b>CVCalendarKit</b> is extremely easy and intuitive. All you need is an instance of a NSDate. 
+Using <b>CVCalendarKit</b> is extremely easy and intuitive. All you need is an instance of a <b>NSDate</b>. 
 
 ```swift
 /// Current date.
@@ -74,6 +75,20 @@ let dayAheadMonthAgo = (today.day + 1).month - 1
 let yearAheadTwoMonthsAgoFiveDaysAhead = ((today.year + 1).month - 2).day + 5
 ```
 
+<b>NSDate</b> `String` description.
+```swift
+/// Date description.
+let date = (NSDate().month == 5).descriptionWithLocale(nil, format: .DDMMYY, style: nil)
+```
+
+Constructing a date from its description `String`.
+```swift
+/// Date from String (its description).
+if let myDate = "May 21, 1997".date(.DDMMYY, style: .MediumStyle) {
+    // Further stuff...
+}
+```
+
 Do you need to compare <b>NSDate</b> instances? Here you go!
 ```swift
 /// NSDate comparison. 
@@ -92,7 +107,7 @@ let firstDateInCurrentYear = today.firstYearDate()
 let lastDateInCurrentYear = today.lastYearDate()
 ```
 
-Custom date can be constructed using `==` overloaded operator on NSDate objects. 
+Custom date can be constructed using `==` overloaded operator on <b>NSDate</b> objects. 
 ```swift
 /// Date construction by assigning values. 
 let customDate = ((today.day == 21).month == 5).year == 1997
