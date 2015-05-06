@@ -27,7 +27,10 @@ private let WeekUnit = NSCalendarUnit.CalendarUnitWeekOfMonth
 private let WeekOfYearUnit = NSCalendarUnit.CalendarUnitWeekOfYear
 private let WeekdayUnit = NSCalendarUnit.CalendarUnitWeekday
 private let DayUnit = NSCalendarUnit.CalendarUnitDay
-private let AllUnits = YearUnit | MonthUnit | WeekUnit | WeekOfYearUnit | WeekdayUnit | DayUnit
+private let HourUnit = NSCalendarUnit.CalendarUnitHour
+private let MinuteUnit = NSCalendarUnit.CalendarUnitMinute
+private let SecondUnit = NSCalendarUnit.CalendarUnitSecond
+private let AllUnits = YearUnit | MonthUnit | WeekUnit | WeekOfYearUnit | WeekdayUnit | DayUnit | HourUnit | MinuteUnit | DayUnit
 
 public extension NSCalendar {
     /**

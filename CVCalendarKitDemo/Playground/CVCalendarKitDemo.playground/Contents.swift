@@ -48,3 +48,11 @@ let todaysDay = today.day.value()
 /// NSDate+Weekday.
 let todaysWeekday = today.weekday // Enum value.
 let todaysWeekdayRaw = today.weekday.rawValue // Raw value.
+
+/// Date description.
+let date = (NSDate().month == 5).descriptionWithLocale(nil, format: .DDMMYY, style: nil)
+
+/// Date from String (its description).
+if let myDate = "May 21, 1997".date(.DDMMYY, style: .MediumStyle) {
+    myDate
+}
