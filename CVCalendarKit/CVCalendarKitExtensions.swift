@@ -19,6 +19,19 @@ public enum Weekday: Int {
     case Thursday
     case Friday
     case Saturday
+    
+    func stringValue() -> String {
+        switch self {
+        case .Sunday: return "Sunday".localized
+        case .Sunday: return "Sunday".localized
+        case .Monday: return "Monday".localized
+        case .Tuesday: return "Tuesday".localized
+        case .Wednesday: return "Wednesday".localized
+        case .Thursday: return "Thursday".localized
+        case .Friday: return "Friday".localized
+        case .Saturday: return "Saturday".localized
+        }
+    }
 }
 
 /**
@@ -189,5 +202,12 @@ public extension String {
         }
         
         return formatter.dateFromString(self)
+    }
+    
+    /**
+    
+    */
+    var localized: String {
+        return NSLocalizedString(self, comment: self)
     }
 }
