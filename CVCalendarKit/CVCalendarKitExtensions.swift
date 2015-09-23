@@ -23,7 +23,6 @@ public enum Weekday: Int {
     func stringValue() -> String {
         switch self {
         case .Sunday: return "Sunday".localized
-        case .Sunday: return "Sunday".localized
         case .Monday: return "Monday".localized
         case .Tuesday: return "Tuesday".localized
         case .Wednesday: return "Wednesday".localized
@@ -170,7 +169,7 @@ public extension NSDate {
     - parameter style: String style for the converted date.
     - returns: A date description string with the given locale and format.
     */
-    func descriptionWithLocale(_ locale: NSLocale? = nil, format: DateFormat = .YYMMDD, style: NSDateFormatterStyle?) -> String {
+    func descriptionWithLocale(locale: NSLocale? = nil, format: DateFormat = .YYMMDD, style: NSDateFormatterStyle?) -> String {
         let formatter = NSDateFormatter()
         formatter.dateFormat = format.rawValue
         

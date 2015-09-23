@@ -75,11 +75,11 @@ private func dateUnitOffset(dateUnit: DateUnit, offset: Int, operation: DateOper
     let result: NSDate
     
     switch dateUnit {
-    case .Year(let date, let value):
+    case .Year(let date, _):
         result = dateWithOffset(date)(Offset(year: offset, month: 0, day: 0), operation)
-    case .Month(let date, let value):
+    case .Month(let date, _):
         result = dateWithOffset(date)(Offset(year: 0, month: offset, day: 0), operation)
-    case .Day(let date, let value):
+    case .Day(let date, _):
         result = dateWithOffset(date)(Offset(year: 0, month: 0, day: offset), operation)
     }
     
