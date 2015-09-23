@@ -21,7 +21,7 @@ public enum DateUnit {
     case Day(NSDate, Int)
     
     /**
-    :returns: An associated value with a particular case.
+    - returns: An associated value with a particular case.
     */
     public func value() -> Int {
         switch self {
@@ -48,9 +48,9 @@ private typealias DateOffset = (Offset, DateOperation) -> NSDate
 /**
 Constructs a date with the offset from the source date.
 
-:param: date The given date for applying the offset.
+- parameter date: The given date for applying the offset.
 
-:returns: A function for getting the date from the offset and the assignment operation.
+- returns: A function for getting the date from the offset and the assignment operation.
 */
 private func dateWithOffset(date: NSDate) -> DateOffset {
     let comps = NSCalendar.currentCalendar().allComponentsFromDate(date)
@@ -68,8 +68,8 @@ private typealias DateOperation = (Int, Int) -> (Int)
 /**
 A bridge between construction function and the given options.
 
-:param: dateUnit A date unit providing the necessary data.
-:param: offset An offset for
+- parameter dateUnit: A date unit providing the necessary data.
+- parameter offset: An offset for
 */
 private func dateUnitOffset(dateUnit: DateUnit, offset: Int, operation: DateOperation) -> NSDate {
     let result: NSDate
@@ -93,9 +93,9 @@ private typealias ComparisonResult = (NSDate, NSDate) -> Bool
 /**
 Compares dates via return closure.
 
-:param: operation Comparison operation.
-:param: resultMerge The way of merging the results.
-:returns: A comparison function.
+- parameter operation: Comparison operation.
+- parameter resultMerge: The way of merging the results.
+- returns: A comparison function.
 */
 private func compareWithOperation(operation: ComparisonOperation, resultMerge: ResultMerge) -> ComparisonResult {
     return { dateA, dateB in
@@ -110,45 +110,45 @@ private func compareWithOperation(operation: ComparisonOperation, resultMerge: R
 // MARK: - DateUnit operators overload
 
 public func + (lhs: DateUnit, rhs: Int) -> NSDate {
-    return dateUnitOffset(lhs, rhs, { x, y in x + y })
+    return dateUnitOffset(lhs, offset: rhs, operation: { x, y in x + y })
 }
 
 public func - (lhs: DateUnit, rhs: Int) -> NSDate {
-    return dateUnitOffset(lhs, rhs, { x, y in x - y })
+    return dateUnitOffset(lhs, offset: rhs, operation: { x, y in x - y })
 }
 
 public func * (lhs: DateUnit, rhs: Int) -> NSDate {
-    return dateUnitOffset(lhs, rhs, { x, y in x * y })
+    return dateUnitOffset(lhs, offset: rhs, operation: { x, y in x * y })
 }
 
 public func / (lhs: DateUnit, rhs: Int) -> NSDate {
-    return dateUnitOffset(lhs, rhs, { x, y in x / y })
+    return dateUnitOffset(lhs, offset: rhs, operation: { x, y in x / y })
 }
 
 public func == (lhs: DateUnit, rhs: Int) -> NSDate {
-    return dateUnitOffset(lhs, rhs, { _, y in y })
+    return dateUnitOffset(lhs, offset: rhs, operation: { _, y in y })
 }
 
 // MARK: - NSDate operators overload
 
 public func == (lhs: NSDate, rhs: NSDate) -> Bool {
-    return compareWithOperation({ $0 == $1 }, { $0 && $1 && $2 })(lhs, rhs)
+    return compareWithOperation({ $0 == $1 }, resultMerge: { $0 && $1 && $2 })(lhs, rhs)
 }
 
 public func > (lhs: NSDate, rhs: NSDate) -> Bool {
-    return compareWithOperation({ $0 > $1 }, { $0 || $1 || $2 })(lhs, rhs)
+    return compareWithOperation({ $0 > $1 }, resultMerge: { $0 || $1 || $2 })(lhs, rhs)
 }
 
 public func >= (lhs: NSDate, rhs: NSDate) -> Bool {
-    return compareWithOperation({ $0 > $1 || lhs == rhs }, { $0 || $1 || $2 })(lhs, rhs)
+    return compareWithOperation({ $0 > $1 || lhs == rhs }, resultMerge: { $0 || $1 || $2 })(lhs, rhs)
 }
 
 public func < (lhs: NSDate, rhs: NSDate) -> Bool {
-    return compareWithOperation({ $0 < $1 }, { $0 || $1 || $2 })(lhs, rhs)
+    return compareWithOperation({ $0 < $1 }, resultMerge: { $0 || $1 || $2 })(lhs, rhs)
 }
 
 public func <= (lhs: NSDate, rhs: NSDate) -> Bool {
-    return compareWithOperation({ $0 < $1 || lhs == rhs }, { $0 || $1 || $2 })(lhs, rhs)
+    return compareWithOperation({ $0 < $1 || lhs == rhs }, resultMerge: { $0 || $1 || $2 })(lhs, rhs)
 }
 
 public func != (lhs: NSDate, rhs: NSDate) -> Bool {
