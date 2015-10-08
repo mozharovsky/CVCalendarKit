@@ -23,7 +23,6 @@ public enum Weekday: Int {
     func stringValue() -> String {
         switch self {
         case .Sunday: return "Sunday".localized
-        case .Sunday: return "Sunday".localized
         case .Monday: return "Monday".localized
         case .Tuesday: return "Tuesday".localized
         case .Wednesday: return "Wednesday".localized
@@ -51,23 +50,23 @@ public enum DateFormat: String {
     case DDDDMMMMYYYY = "dddd-MMMM-yyyy"
 }
 
-private let YearUnit = NSCalendarUnit.CalendarUnitYear
-private let MonthUnit = NSCalendarUnit.CalendarUnitMonth
-private let WeekUnit = NSCalendarUnit.CalendarUnitWeekOfMonth
-private let WeekOfYearUnit = NSCalendarUnit.CalendarUnitWeekOfYear
-private let WeekdayUnit = NSCalendarUnit.CalendarUnitWeekday
-private let DayUnit = NSCalendarUnit.CalendarUnitDay
-private let HourUnit = NSCalendarUnit.CalendarUnitHour
-private let MinuteUnit = NSCalendarUnit.CalendarUnitMinute
-private let SecondUnit = NSCalendarUnit.CalendarUnitSecond
-private let AllUnits = YearUnit | MonthUnit | WeekUnit | WeekOfYearUnit | WeekdayUnit | DayUnit | HourUnit | MinuteUnit | DayUnit
+private let YearUnit = NSCalendarUnit.Year
+private let MonthUnit = NSCalendarUnit.Month
+private let WeekUnit = NSCalendarUnit.WeekOfMonth
+private let WeekOfYearUnit = NSCalendarUnit.WeekOfYear
+private let WeekdayUnit = NSCalendarUnit.Weekday
+private let DayUnit = NSCalendarUnit.Day
+private let HourUnit = NSCalendarUnit.Hour
+private let MinuteUnit = NSCalendarUnit.Minute
+private let SecondUnit = NSCalendarUnit.Second
+private let AllUnits = YearUnit.union(MonthUnit).union(WeekUnit).union(WeekOfYearUnit).union(WeekdayUnit).union(DayUnit).union(HourUnit).union(MinuteUnit).union(DayUnit)
 
 public extension NSCalendar {
     /**
     Returns the NSDateComponents instance for all main units.
     
-    :param: Date The date for components construction.
-    :returns: The NSDateComponents instance for all main units.
+    - parameter Date: The date for components construction.
+    - returns: The NSDateComponents instance for all main units.
     */
     func allComponentsFromDate(date: NSDate) -> NSDateComponents {
         return components(AllUnits, fromDate: date)
@@ -81,7 +80,7 @@ public extension NSDate {
     /**
     Calculates the date values.
     
-    :returns: A tuple with date year, month and day values.
+    - returns: A tuple with date year, month and day values.
     */
     private func dateRange() -> DateRange {
         let calendar = NSCalendar.currentCalendar()
@@ -129,7 +128,7 @@ public extension NSDate {
     /**
     Returns the first date in the current date's month.
     
-    :returns: The first date in the current date's month.
+    - returns: The first date in the current date's month.
     */
     func firstMonthDate() -> NSDate {
         return (self.day == 1)
@@ -138,7 +137,7 @@ public extension NSDate {
     /**
     Returns the last date in the current date's month.
     
-    :returns: The las date in the current date's month.
+    - returns: The las date in the current date's month.
     */
     func lastMonthDate() -> NSDate {
         return ((firstMonthDate().month + 1).day - 1)
@@ -147,7 +146,7 @@ public extension NSDate {
     /**
     Returns the first date in the current date's year.
     
-    :returns: The first date in the current date's year.
+    - returns: The first date in the current date's year.
     */
     func firstYearDate() -> NSDate {
         return ((NSDate().month == 1).day == 1)
@@ -156,7 +155,7 @@ public extension NSDate {
     /**
     Returns the last date in the current date's year.
     
-    :returns: The last date in the current date's year.
+    - returns: The last date in the current date's year.
     */
     func lastYearDate() -> NSDate {
         return (((firstYearDate().month == 12).month + 1).day - 1)
@@ -165,12 +164,12 @@ public extension NSDate {
     /**
     Returns a date description string with the given locale and format. 
     
-    :param: locale The locale for converting the date. 
-    :param: format String format for the converted date.
-    :param: style String style for the converted date.
-    :returns: A date description string with the given locale and format.
+    - parameter locale: The locale for converting the date. 
+    - parameter format: String format for the converted date.
+    - parameter style: String style for the converted date.
+    - returns: A date description string with the given locale and format.
     */
-    func descriptionWithLocale(_ locale: NSLocale? = nil, format: DateFormat = .YYMMDD, style: NSDateFormatterStyle?) -> String {
+    func descriptionWithLocale(locale: NSLocale? = nil, format: DateFormat = .YYMMDD, style: NSDateFormatterStyle?) -> String {
         let formatter = NSDateFormatter()
         formatter.dateFormat = format.rawValue
         
@@ -190,9 +189,9 @@ public extension String {
     /**
     Returns an optional associated with date from the given string and format. 
     
-    :param: format Date format used for date conversion.
-    :param: style Date style for date conversion.
-    :returns: Either an NSDate instance or nil if a String can't be converted.
+    - parameter format: Date format used for date conversion.
+    - parameter style: Date style for date conversion.
+    - returns: Either an NSDate instance or nil if a String can't be converted.
     */
     func date(format: DateFormat, style: NSDateFormatterStyle? = .LongStyle) -> NSDate? {
         let formatter = NSDateFormatter()
