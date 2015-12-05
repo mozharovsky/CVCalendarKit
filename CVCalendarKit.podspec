@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name         = "CVCalendarKit"
-s.version      = "0.1.1"
+s.version      = "0.1.5"
 s.summary      = "A wrapper around NSDate which provides a convenience way for dealing with dates and NSCalendar."
 s.homepage     = "https://github.com/Mozharovsky/CVCalendarKit"
 s.license      = { :type => 'MIT' }
