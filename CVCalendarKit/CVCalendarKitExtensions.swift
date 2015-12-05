@@ -34,8 +34,8 @@ public enum Weekday: Int {
 }
 
 /**
-Date format for string description and date construction.
-*/
+ Date format for string description and date construction.
+ */
 public enum DateFormat: String {
     case YYMMDD = "yy-MM-dd"
     case YYYYMMDD = "yyyy-MM-dd"
@@ -59,14 +59,14 @@ private let DayUnit = NSCalendarUnit.Day
 private let HourUnit = NSCalendarUnit.Hour
 private let MinuteUnit = NSCalendarUnit.Minute
 private let SecondUnit = NSCalendarUnit.Second
-private let AllUnits = YearUnit.union(MonthUnit).union(WeekUnit).union(WeekOfYearUnit).union(WeekdayUnit).union(DayUnit).union(HourUnit).union(MinuteUnit).union(DayUnit)
+private let AllUnits: NSCalendarUnit = [YearUnit , MonthUnit , WeekUnit , WeekOfYearUnit , WeekdayUnit , DayUnit, HourUnit, MinuteUnit, SecondUnit]
 
 public extension NSCalendar {
     /**
     Returns the NSDateComponents instance for all main units.
     
-    - parameter Date: The date for components construction.
-    - returns: The NSDateComponents instance for all main units.
+    :param: Date The date for components construction.
+    :returns: The NSDateComponents instance for all main units.
     */
     func allComponentsFromDate(date: NSDate) -> NSDateComponents {
         return components(AllUnits, fromDate: date)
@@ -80,13 +80,38 @@ public extension NSDate {
     /**
     Calculates the date values.
     
-    - returns: A tuple with date year, month and day values.
+    :returns: A tuple with date year, month and day values.
     */
     private func dateRange() -> DateRange {
         let calendar = NSCalendar.currentCalendar()
         let comps = calendar.allComponentsFromDate(self)
         
         return (comps.year, comps.month, comps.day)
+    }
+    
+    /**
+    Calculates the specific date values.
+    
+    :returns: A tuple with date hours and minutes.
+    */
+    private typealias DateSpecificRange = (hours: Int, minutes: Int)
+    private func dateSpecificRange() -> DateSpecificRange {
+        let calendar = NSCalendar.currentCalendar()
+        let comps = calendar.allComponentsFromDate(self)
+        
+        return (comps.hour, comps.minute)
+    }
+    
+    var hour: DateUnit {
+        get {
+            return .Hour(self, dateSpecificRange().hours)
+        }
+    }
+    
+    var minute: DateUnit {
+        get {
+            return .Minute(self, dateSpecificRange().minutes)
+        }
     }
     
     /**
@@ -128,7 +153,7 @@ public extension NSDate {
     /**
     Returns the first date in the current date's month.
     
-    - returns: The first date in the current date's month.
+    :returns: The first date in the current date's month.
     */
     func firstMonthDate() -> NSDate {
         return (self.day == 1)
@@ -137,7 +162,7 @@ public extension NSDate {
     /**
     Returns the last date in the current date's month.
     
-    - returns: The las date in the current date's month.
+    :returns: The las date in the current date's month.
     */
     func lastMonthDate() -> NSDate {
         return ((firstMonthDate().month + 1).day - 1)
@@ -146,7 +171,7 @@ public extension NSDate {
     /**
     Returns the first date in the current date's year.
     
-    - returns: The first date in the current date's year.
+    :returns: The first date in the current date's year.
     */
     func firstYearDate() -> NSDate {
         return ((NSDate().month == 1).day == 1)
@@ -155,20 +180,40 @@ public extension NSDate {
     /**
     Returns the last date in the current date's year.
     
-    - returns: The last date in the current date's year.
+    :returns: The last date in the current date's year.
     */
     func lastYearDate() -> NSDate {
         return (((firstYearDate().month == 12).month + 1).day - 1)
     }
     
-    /**
-    Returns a date description string with the given locale and format. 
+    convenience init?(date: NSDate, hour: Int, minute: Int) {
+        let calendar = NSCalendar.currentCalendar()
+        let comps = calendar.components([.Hour , .Minute], fromDate: date)
+        comps.hour = 0
+        comps.minute = 0
+        
+        let first = calendar.dateFromComponents(comps)!
+        
+        let compss = calendar.components([.Hour , .Minute], fromDate: first)
+        compss.hour = hour
+        compss.minute = minute
+        
+        if let result = calendar.dateFromComponents(compss) {
+            self.init(timeIntervalSince1970: result.timeIntervalSince1970)
+        } else {
+            self.init()
+            return nil
+        }
+    }
     
-    - parameter locale: The locale for converting the date. 
-    - parameter format: String format for the converted date.
-    - parameter style: String style for the converted date.
-    - returns: A date description string with the given locale and format.
-    */
+    /**
+     Returns a date description string with the given locale and format.
+     
+     - parameter locale: The locale for converting the date.
+     - parameter format: String format for the converted date.
+     - parameter style: String style for the converted date.
+     - returns: A date description string with the given locale and format.
+     */
     func descriptionWithLocale(locale: NSLocale? = nil, format: DateFormat = .YYMMDD, style: NSDateFormatterStyle?) -> String {
         let formatter = NSDateFormatter()
         formatter.dateFormat = format.rawValue
@@ -187,12 +232,12 @@ public extension NSDate {
 
 public extension String {
     /**
-    Returns an optional associated with date from the given string and format. 
-    
-    - parameter format: Date format used for date conversion.
-    - parameter style: Date style for date conversion.
-    - returns: Either an NSDate instance or nil if a String can't be converted.
-    */
+     Returns an optional associated with date from the given string and format.
+     
+     - parameter format: Date format used for date conversion.
+     - parameter style: Date style for date conversion.
+     - returns: Either an NSDate instance or nil if a String can't be converted.
+     */
     func date(format: DateFormat, style: NSDateFormatterStyle? = .LongStyle) -> NSDate? {
         let formatter = NSDateFormatter()
         formatter.dateFormat = format.rawValue
@@ -204,8 +249,8 @@ public extension String {
     }
     
     /**
-    
-    */
+     
+     */
     var localized: String {
         return NSLocalizedString(self, comment: self)
     }
