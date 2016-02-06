@@ -31,7 +31,7 @@ Further changes.
 <h4>CocoaPods.</h4>
 
 ```ruby
-pod 'CVCalendarKit', '~> 0.1.1'
+pod 'CVCalendarKit', '~> 0.1.5'
 ```
 
 <h4>Manual setup.</h4>
